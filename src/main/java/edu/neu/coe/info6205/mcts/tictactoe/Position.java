@@ -171,6 +171,7 @@ public class Position {
     int[] projectRow(int i) {
         return grid[i];
     }
+    //
 
     /**
      * Project column j.
