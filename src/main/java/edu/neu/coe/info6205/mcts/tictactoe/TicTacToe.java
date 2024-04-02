@@ -10,17 +10,41 @@ import java.util.*;
  * Class which models the game of TicTacToe.
  */
 public class TicTacToe implements Game<TicTacToe> {
-    /**
-     * Main program to run a random TicTacToe game.
-     *
-     * @param args command-line arguments.
-     */
-    public static void main(String[] args) {
-        // NOTE the behavior of the game to be run will be based on the TicTacToe instance field: random.
-        State<TicTacToe> state = new TicTacToe().runGame();
-        if (state.winner().isPresent()) System.out.println("TicTacToe: winner is: " + state.winner().get());
-        else System.out.println("TicTacToe: draw");
-    }
+
+
+        public static void main(String[] args) {
+            int[] totalGames = new int[]{100, 200, 400, 800, 1600, 3200};
+
+            for (int n : totalGames) {
+                runGames(n);
+            }
+        }
+
+        public static void runGames(int totalGames) {
+            int playerXCount = 0; // Renamed to represent Player X (previously Player 1)
+            int playerOCount = 0; // Renamed to represent Player O (previously Player 0)
+            int drawCount = 0; // Added count for draws
+
+            for (int j = 0; j < totalGames; j++) {
+                State<TicTacToe> state = new TicTacToe().runGame();
+                if (state.winner().isPresent()) {
+                    if (state.winner().get() == 1) {
+                        playerXCount++;
+                    } else {
+                        playerOCount++;
+                    }
+                } else {
+                    drawCount++;
+                }
+            }
+
+            System.out.println("Total Games\tPlayer X (X) Wins\tPlayer O (O) Wins\tDraws");
+            System.out.println(totalGames + "\t\t" + playerXCount + "\t\t\t" + playerOCount + "\t\t\t" + drawCount);
+            System.out.println("--------------------");
+
+        }
+
+
 
     public static final int X = 1;
     public static final int O = 0;
