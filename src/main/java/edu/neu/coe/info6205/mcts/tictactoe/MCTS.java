@@ -11,8 +11,8 @@ public class MCTS {
         MCTS mcts = new MCTS(new TicTacToeNode(new TicTacToe().new TicTacToeState()));
         Node<TicTacToe> root = mcts.root;
 
-        // This is where you process the MCTS to try to win the game.
-        int iterations = 1000; // Number of iterations for MCTS
+
+        int iterations = 1200;
         mcts.runMCTS(iterations, root);
     }
 
@@ -22,18 +22,16 @@ public class MCTS {
 
     private final Node<TicTacToe> root;
 
-    // Method to run the Monte Carlo Tree Search algorithm
+
     public void runMCTS(int iterations, Node<TicTacToe> root) {
         for (int i = 0; i < iterations; i++) {
-            // Selection phase
             TicTacToeNode promisingNode = selectPromisingNode((TicTacToeNode) root);
 
-            // Expansion phase
+
             if (!promisingNode.state().isTerminal()) {
                 promisingNode.explore();
             }
 
-            // Simulation phase
             TicTacToeNode nodeToExplore = promisingNode;
             if (!promisingNode.children().isEmpty()) {
                 nodeToExplore = promisingNode.randomChild();
@@ -45,7 +43,6 @@ public class MCTS {
         }
     }
 
-    // Method to select the most promising node according to UCB1
     private TicTacToeNode selectPromisingNode(TicTacToeNode rootNode) {
         TicTacToeNode currentNode = rootNode;
         while (!currentNode.children().isEmpty()) {
@@ -59,28 +56,28 @@ public class MCTS {
                     nodeWithMaxUCB1 = ticTacToeChild;
                 }
             }
-            // Update the current node to the most promising child node
+
             currentNode = nodeWithMaxUCB1;
         }
         return currentNode;
     }
 
-    // Method to calculate the UCB1 value for a node
+
     private double calculateUCB1(TicTacToeNode node) {
         double c = Math.sqrt(2);
-        int ni = node.playouts(); // Number of simulations for the node
-        int wi = node.wins(); // Number of wins for the node
-        int Ni = node.parent() != null ? node.parent().playouts() : 1; // Total simulations for the parent node, avoid division by zero
+        int ni = node.playouts();
+        int wi = node.wins();
+        int Ni = node.parent() != null ? node.parent().playouts() : 1;
 
         if (ni == 0) {
-            return Double.MAX_VALUE; // Always select unvisited nodes first
+            return Double.MAX_VALUE;
         }
 
         return ((double) wi / (double) ni) + c * Math.sqrt((2 * Math.log(Ni)) / ni);
     }
 
 
-    // Method to backpropagate the result of a playout through the tree
+
     private void backPropagate(TicTacToeNode nodeToExplore, int playerNo) {
         TicTacToeNode tempNode = nodeToExplore;
         while (tempNode != null) {
