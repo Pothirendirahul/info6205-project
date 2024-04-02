@@ -21,10 +21,9 @@ public class TicTacToe implements Game<TicTacToe> {
         }
 
         public static void runGames(int totalGames) {
-            int playerXCount = 0; // Renamed to represent Player X (previously Player 1)
-            int playerOCount = 0; // Renamed to represent Player O (previously Player 0)
-            int drawCount = 0; // Added count for draws
-
+            int playerXCount = 0;
+            int playerOCount = 0;
+            int drawCount = 0;
             for (int j = 0; j < totalGames; j++) {
                 State<TicTacToe> state = new TicTacToe().runGame();
                 if (state.winner().isPresent()) {
