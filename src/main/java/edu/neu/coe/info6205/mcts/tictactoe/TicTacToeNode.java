@@ -6,8 +6,11 @@ import edu.neu.coe.info6205.mcts.core.State;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
+import java.util.Random;
 
 public class TicTacToeNode implements Node<TicTacToe> {
+    private final Random random = new Random();
+    private TicTacToeNode parent;
 
     /**
      * @return true if this node is a leaf node (in which case no further exploration is possible).
@@ -79,6 +82,7 @@ public class TicTacToeNode implements Node<TicTacToe> {
     public TicTacToeNode(State<TicTacToe> state) {
         this.state = state;
         children = new ArrayList<>();
+        parent = this;
         initializeNodeData();
     }
 
@@ -93,9 +97,39 @@ public class TicTacToeNode implements Node<TicTacToe> {
         }
     }
 
+    public TicTacToeNode randomChild() {
+        if (children.isEmpty()) {
+            throw new IllegalStateException("No children to select from.");
+        }
+        int randomIndex = random.nextInt(children.size());
+        return (TicTacToeNode) children.get(randomIndex);
+    }
+
+    public TicTacToeNode parent() {
+        return this.parent;
+    }
+
+
     private final State<TicTacToe> state;
     private final ArrayList<Node<TicTacToe>> children;
 
     private int wins;
+
+    public int getWins() {
+        return wins;
+    }
+
+    public void setWins(int wins) {
+        this.wins = wins;
+    }
+
+    public int getPlayouts() {
+        return playouts;
+    }
+
+    public void setPlayouts(int playouts) {
+        this.playouts = playouts;
+    }
+
     private int playouts;
 }
