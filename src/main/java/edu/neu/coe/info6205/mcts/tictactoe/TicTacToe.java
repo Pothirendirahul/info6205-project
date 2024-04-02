@@ -13,7 +13,7 @@ public class TicTacToe implements Game<TicTacToe> {
 
 
         public static void main(String[] args) {
-            int[] totalGames = new int[]{100, 200, 400, 800, 1600, 3200};
+            int[] totalGames = new int[]{200, 400, 800, 1600, 3200, 6400};
 
             for (int n : totalGames) {
                 runGames(n);
