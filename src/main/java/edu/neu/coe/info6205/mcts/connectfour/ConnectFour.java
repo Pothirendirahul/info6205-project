@@ -218,9 +218,11 @@ public class ConnectFour implements Game<ConnectFour> {
             return sb.toString();
         }
 
+        //ITERATOR
         @Override
         public Iterator<Move<ConnectFour>> moveIterator(int player) {
             return moves(player).iterator();
         }
     }
 }
+
