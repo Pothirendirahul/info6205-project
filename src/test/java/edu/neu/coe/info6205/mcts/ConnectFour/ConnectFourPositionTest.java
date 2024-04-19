@@ -122,3 +122,4 @@ public class ConnectFourPositionTest {
         assertArrayEquals("Reflected position should be identical to original", position.grid, reflectedPosition.grid);
     }
 }
+//
